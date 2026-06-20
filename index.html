@@ -33,7 +33,9 @@ body{font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--bg)
 header{height:52px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:.5px solid var(--border);gap:10px}
 .logo-wrap{display:flex;align-items:center;gap:12px}
 .hdr-center{display:flex;gap:2px;background:var(--bg2);border-radius:20px;padding:3px;flex-shrink:0}
-.logo-icon{display:flex;align-items:center;flex-shrink:0}
+.logo-icon{display:flex;align-items:center;flex-shrink:0;pointer-events:none}
+.logo-mark{display:flex;align-items:center;font-family:Georgia,serif;font-style:italic;font-weight:700;font-size:22px;color:#111;position:relative;letter-spacing:-.5px;pointer-events:none}
+.logo-mark-dot{width:6px;height:6px;border-radius:50%;background:#111;margin-left:2px;margin-top:-10px;pointer-events:none}
 
 .logo-dot{color:var(--text)}
 .view-toggle{display:flex;gap:2px;background:var(--bg2);border-radius:20px;padding:3px}
@@ -412,13 +414,7 @@ nav::-webkit-scrollbar{display:none}
 </head>
 <body>
 <header>
-  <div class="logo-icon">
-    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect width="28" height="28" rx="8" fill="#111"/>
-      <text x="7" y="20" font-family="Georgia,serif" font-size="16" font-style="italic" font-weight="700" fill="white">t</text>
-      <circle cx="18" cy="11" r="3" fill="#ffffff"/>
-    </svg>
-  </div>
+  <div class="logo-icon"><div class="logo-mark">t<span class="logo-mark-dot"></span></div></div>
   <div class="hdr-center" id="view-toggle">
     <button class="vt-btn on" data-vt="cat">카테고리</button>
     <button class="vt-btn" data-vt="status">상태별</button>
@@ -1554,8 +1550,8 @@ function buildShareCard(){
   const bars=cats.map((c,i)=>`<div class="share-bar-row"><div class="share-bar-l">${CAT_NAME[c]}</div><div class="share-bar-t"><div class="share-bar-f" style="width:${Math.round(dc[i]/mx*100)}%"></div></div><div class="share-bar-n">${dc[i]}</div></div>`).join('');
   $('share-card').innerHTML=`<div class="share-card-logo">taste<span>.</span>archive</div><div class="share-card-year">${new Date().getFullYear()}년 기록</div><div class="share-card-stats"><div class="share-stat"><div class="share-stat-n">${td}</div><div class="share-stat-l">완료</div></div><div class="share-stat"><div class="share-stat-n">${avg}</div><div class="share-stat-l">평균 별점</div></div></div>${bars}`;
 }
-$('share-trigger').onclick=()=>{buildShareCard();$('share-overlay').classList.add('open');};
-[$('share-close'),$('share-cancel')].forEach(b=>b.onclick=()=>$('share-overlay').classList.remove('open'));
+$('share-trigger')?.addEventListener('click',()=>{buildShareCard();$('share-overlay').classList.add('open');});
+[$('share-close'),$('share-cancel')].filter(Boolean).forEach(b=>b.onclick=()=>$('share-overlay').classList.remove('open'));
 $('share-overlay').onclick=e=>{if(e.target===$('share-overlay'))$('share-overlay').classList.remove('open');};
 $('share-dl').onclick=()=>{
   const card=$('share-card');
