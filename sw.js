@@ -1,4 +1,4 @@
-const CACHE = 'taste-archive-v1';
+const CACHE = 'taste-archive-v2';
 const ASSETS = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', e => {
